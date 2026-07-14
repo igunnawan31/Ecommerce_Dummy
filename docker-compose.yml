@@ -13,6 +13,24 @@ services:
       - "5433:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+      
+  backend:
+    build:
+      context: ./ECommerceBackend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/db_business_user
+
+  frontend-next:
+    build:
+      context: ./ecommercefrontend-next
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
 
 volumes:
   db_data:

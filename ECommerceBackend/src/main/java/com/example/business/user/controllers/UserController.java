@@ -2,9 +2,17 @@ package com.example.business.user.controllers;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.business.dtos.response.ApiResponse;
+import com.example.business.user.dtos.request.SellerSignupRequest;
 import com.example.business.user.dtos.request.UserCreateRequest;
 import com.example.business.user.dtos.request.UserUpdateRequest;
 import com.example.business.user.dtos.response.UserAllResponse;
@@ -24,15 +32,26 @@ public class UserController {
     }
 
     @PostMapping
-    public ApiResponse<UserCreateResponse> createUser(@RequestBody UserCreateRequest request) {
+    public ApiResponse<UserCreateResponse> createCustomer(@RequestBody UserCreateRequest request) {
         return ApiResponse.success(
-            "User created successfully",
-            userService.createUser(request)
+            "Customer registered successfully",
+            userService.createCustomer(request)
+        );
+    }
+
+    @PostMapping("/seller")
+    public ApiResponse<UserCreateResponse> registerSeller(@RequestBody SellerSignupRequest request) {
+        return ApiResponse.success(
+            "Seller registered successfully",
+            userService.registerSeller(request)
         );
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<UserUpdateResponse> updateUser(@PathVariable Long id, @RequestBody UserUpdateRequest request) {
+    public ApiResponse<UserUpdateResponse> updateUser(
+        @PathVariable Long id,
+        @RequestBody UserUpdateRequest request
+    ) {
         return ApiResponse.success(
             "User updated successfully",
             userService.updateUser(id, request)
